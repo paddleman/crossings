@@ -18,6 +18,15 @@ defmodule Crossings.Accounts.User do
     timestamps()
   end
 
+  @spec registration_changeset(
+          {map, map}
+          | %{
+              :__struct__ => atom | %{:__changeset__ => map, optional(any) => any},
+              optional(atom) => any
+            },
+          :invalid | %{optional(:__struct__) => none, optional(atom | binary) => any},
+          keyword
+        ) :: Ecto.Changeset.t()
   @doc """
   A user changeset for registration.
 
@@ -43,8 +52,18 @@ defmodule Crossings.Accounts.User do
   """
   def registration_changeset(user, attrs, opts \\ []) do
     user
-    |> cast(attrs, [:email, :password])
+    |> cast(attrs, [
+      :email,
+      :username,
+      :display_handle,
+      :full_name,
+      :password,
+      :avatar_url,
+      :bio,
+      :background_url
+    ])
     |> validate_email(opts)
+    |> validate_username(opts)
     |> validate_password(opts)
   end
 
@@ -56,10 +75,32 @@ defmodule Crossings.Accounts.User do
     |> maybe_validate_unique_email(opts)
   end
 
+  defp validate_username(changeset, opts) do
+    changeset
+    |> validate_required([:username, :full_name])
+    |> validate_length(:username, min: 5, max: 30)
+    |> validate_format(:username, ~r/^[a-zA-Z0-9_.-]*$/,
+      message: "Please use letters and numbers without space(only characters allowed _ . -)"
+    )
+    |> unique_constraint(:username)
+    |> validate_length(:full_name, min: 4, max: 30)
+    |> maybe_validate_unique_username(opts)
+  end
+
+  defp maybe_validate_unique_username(changeset, opts) do
+    if Keyword.get(opts, :validate_username, true) do
+      changeset
+      |> unsafe_validate_unique(:username, Crossings.Repo)
+      |> unique_constraint(:username)
+    else
+      changeset
+    end
+  end
+
   defp validate_password(changeset, opts) do
     changeset
     |> validate_required([:password])
-    |> validate_length(:password, min: 12, max: 72)
+    |> validate_length(:password, min: 6, max: 72)
     # |> validate_format(:password, ~r/[a-z]/, message: "at least one lower case character")
     # |> validate_format(:password, ~r/[A-Z]/, message: "at least one upper case character")
     # |> validate_format(:password, ~r/[!?@#$%^&*_0-9]/, message: "at least one digit or punctuation character")

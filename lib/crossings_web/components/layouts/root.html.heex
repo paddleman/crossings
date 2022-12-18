@@ -29,8 +29,15 @@
         </div>
         <div class="flex items-center gap-4">
           <%= if @current_user do %>
-            <div class="text-[0.8125rem] font-semibold leading-6 text-zinc-900 hover:text-zinc-700">
-              <%= @current_user.email %>
+            <div>
+              <img
+                src={@current_user.avatar_url}
+                alt=""
+                class="inline-block h-8 w-8 rounded-full ring-2 ring-white"
+              />
+            </div>
+            <div class="text-[0.8125rem] font-semibold leading-6 text-green-500 hover:text-red-700">
+              <%= @current_user.display_handle %>
             </div>
 
             <.link

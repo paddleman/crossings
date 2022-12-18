@@ -34,6 +34,11 @@ defmodule CrossingsWeb.UserRegistrationLive do
         </.error>
 
         <.input field={{f, :email}} type="email" label="Email" required />
+        <.input field={{f, :username}} type="text" label="Username" required />
+        <.input field={{f, :display_handle}} type="text" label="Desired Current Handle" required />
+
+        <.input field={{f, :full_name}} type="text" label="Full Name" required />
+
         <.input field={{f, :password}} type="password" label="Password" required />
 
         <:actions>
