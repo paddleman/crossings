@@ -1,0 +1,59 @@
+<div class="mx-auto border-r border-b border-l border-gray-400  bg-zinc-100/20 rounded-b py-6 w-1/2 flex">
+  <div class="h-48 lg:h-auto lg:w-48 flex-none bg-cover rounded-t lg:rounded-t-none lg:rounded-l text-center overflow-hidden">
+    <.user_avatar user={@user} class="w-48 h-48 rounded-full" />
+  </div>
+  <div class="  p-4 flex flex-col justify-between leading-normal">
+    <div class="mb-8">
+      <div class="text-gray-900 font-bold text-2xl mb-2">
+        User: {@user.full_name}
+      </div>
+      <.label>
+        Username:
+      </.label>
+      <span class="text-zinc-100 font-bold text-2xl mb-2">
+        {@user.username}
+      </span>
+
+      <p class="text-gray-700 text-base">
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatibus quia, nulla! Maiores et perferendis eaque, exercitationem praesentium nihil.
+      </p>
+    </div>
+    <.button class="w-1/2 mx-auto text-xl" phx-click={show_modal("edit-avatar-bio-modal")}>
+      Add/edit Avatar and Bio
+    </.button>
+  </div>
+</div>
+
+<.modal id="edit-avatar-bio-modal">
+  <div class="mb-3 text-center text-2xl text-zinc-100 font-semibold">
+    Add/Edit User Avatar and Bio
+  </div>
+  <.form for={%{}} phx-change="validate-avatar" phx-submit="submit-avatar">
+    <div class="mb-4">
+      <%= if Enum.any?(@uploads.avatar.entries) do %>
+        <div class="mx-auto mb-2 w-48">
+          <.live_img_preview
+            entry={List.first(@uploads.avatar.entries)}
+            class="rounded"
+            width={192}
+            height={192}
+          />
+
+          <button
+            class="w-full bg-emerald-600 hover:bg-emerald-700 text-white rounded mt-2 py-1 shadow"
+            type="submit"
+          >
+            Save
+          </button>
+        </div>
+      <% else %>
+        <.user_avatar user={@user} class="w-48 rounded mx-auto" />
+      <% end %>
+    </div>
+
+    <label class="block mb-2 font-semibold text-2xl text-zinc-100">
+      Upload Avatar
+    </label>
+    <.live_file_input upload={@uploads.avatar} class="w-full" />
+  </.form>
+</.modal>

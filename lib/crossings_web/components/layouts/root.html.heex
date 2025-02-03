@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en" class="[scrollbar-gutter:stable]">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="csrf-token" content={get_csrf_token()} />
+    <.live_title default="Crossings" suffix=" · Phoenix Framework">
+      {assigns[:page_title]}
+    </.live_title>
+    <link phx-track-static rel="stylesheet" href={~p"/assets/app.css"} />
+    <script defer phx-track-static type="text/javascript" src={~p"/assets/app.js"}>
+    </script>
+  </head>
+  <body class="bg-lidar-dark">
+    <header class="px-4 mb-4">
+      <div class="flex items-center justify-between border-b border-zinc-100 py-3 text-sm">
+        <div class="flex items-center gap-4">
+          <a href="/">
+            <img src={~p"/images/logo.svg"} width="36" />
+          </a>
+          <p class="bg-brand/5 text-brand rounded-full px-2 font-medium leading-6">
+            v{Application.spec(:phoenix, :vsn)}
+          </p>
+        </div>
+        <div class="flex items-center gap-4 font-semibold leading-6 text-zinc-900">
+          <ul class="relative z-10 flex items-center gap-4 px-4 sm:px-6 lg:px-8 justify-end">
+            <%= if @current_user do %>
+              <li>
+                <%!-- <button class="group relative flex items-center h-8 text-sm pl-8 pr-3 hover:bg-slate-300 cursor-pointer w-full">
+         <.icon name="hero-plus" class="h-4 w-4 relative top-px" />
+
+         <span class="ml-2 leading-none">Add rooms</span>
+
+         <div class="hidden group-focus:block cursor-default absolute top-8 right-2 bg-white border-slate-200 border py-3 rounded-lg">
+           <div class="w-full text-left">
+             <div class="hover:bg-sky-600">
+               <div
+                 class="cursor-pointer whitespace-nowrap text-gray-800 hover:text-white px-6 py-1 block"
+                 phx-click={JS.navigate(~p"/rooms/#{@room}/new")}
+               >
+                 Create a new room
+               </div>
+             </div>
+
+             <div class="hover:bg-sky-600">
+               <div
+                 phx-click={JS.navigate(~p"/rooms")}
+                 class="cursor-pointer whitespace-nowrap text-gray-800 hover:text-white px-6 py-1"
+               >
+                 Browse rooms
+               </div>
+             </div>
+           </div>
+         </div>
+       </button> --%>
+
+                <%!-- <.link
+                   href={~p"/users/settings"}
+                   class="text-med leading-6 text-zinc-900 font-semibold hover:text-zinc-700"
+                 > --%>
+
+                <li>
+                  <button class="group relative flex items-center h-8 text-sm pl-8 pr-3 hover:bg-slate-300 cursor-pointer w-full">
+                    <CrossingsWeb.UserComponent.user_avatar
+                      user={@current_user}
+                      class="w-10 h-10 rounded-full bg-zinc-100/25 hover:bg-mc-med-teal"
+                    />
+
+                    <div class="hidden group-focus:block cursor-default absolute top-8 right-2 bg-white border-slate-200 border py-3 rounded-lg">
+                      <div class="w-full text-left">
+                        <div class="hover:bg-sky-600">
+                          <div
+                            class="cursor-pointer whitespace-nowrap text-gray-800 hover:text-white px-6 py-1 block"
+                            phx-click={JS.navigate(~p"/users/settings")}
+                          >
+                            Manage Password and Email
+                          </div>
+                        </div>
+
+                        <div class="hover:bg-sky-600">
+                          <div
+                            phx-click={JS.navigate(~p"/users/profile")}
+                            class="cursor-pointer whitespace-nowrap text-gray-800 hover:text-white px-6 py-1"
+                          >
+                            User Profile
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </button>
+                </li>
+                <li class="text-med leading-6 text-zinc-300 hover:text-zinc-300/50">
+                  {@current_user.username}
+                </li>
+              </li>
+              <li>
+                <.link
+                  href={~p"/users/log_out"}
+                  method="delete"
+                  class="text-[0.8125rem] leading-6 font-semibold text-zinc-300 hover:text-zinc-300/50"
+                >
+                  Log out
+                </.link>
+              </li>
+            <% else %>
+              <li>
+                <.link
+                  href={~p"/users/register"}
+                  class=" leading-6 font-semibold text-zinc-300 hover:text-zinc-300/50"
+                >
+                  Register
+                </.link>
+              </li>
+              <li>
+                <.link
+                  href={~p"/users/log_in"}
+                  class="leading-6 font-semibold text-zinc-300 hover:text-zinc-300/50"
+                >
+                  Log in
+                </.link>
+              </li>
+            <% end %>
+          </ul>
+        </div>
+      </div>
+    </header>
+
+    {@inner_content}
+  </body>
+</html>
