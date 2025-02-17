@@ -8,6 +8,10 @@ defmodule Crossings.Accounts do
 
   alias Crossings.Accounts.{User, UserToken, UserNotifier}
 
+  @pubsub Crossings.PubSub
+
+  @user_avatar_topic "user_avatars"
+
   ## Database getters
 
   @doc """
@@ -72,7 +76,6 @@ defmodule Crossings.Accounts do
 
       iex> register_user(%{field: bad_value})
       {:error, %Ecto.Changeset{}}
-
   """
   def register_user(attrs) do
     %User{}
@@ -81,9 +84,18 @@ defmodule Crossings.Accounts do
   end
 
   def save_avatar_path(user, avatar_path) do
-    user
-    |> User.avatar_changeset(%{avatar_url: avatar_path})
-    |> Repo.update()
+    with {:ok, user} <-
+           user
+           |> User.avatar_changeset(%{avatar_url: avatar_path})
+           |> Repo.update() do
+      Phoenix.PubSub.broadcast!(@pubsub, @user_avatar_topic, {:updated_avatar, user})
+
+      {:ok, user}
+    end
+  end
+
+  def subscribe_to_user_avatars do
+    Phoenix.PubSub.subscribe(@pubsub, @user_avatar_topic)
   end
 
   @doc """

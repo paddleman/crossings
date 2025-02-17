@@ -1,4 +1,4 @@
-defmodule Crossings.SocketHelpers do
+defmodule CrossingsWeb.SocketHelpers do
   def ok(socket) do
     {:ok, socket}
   end

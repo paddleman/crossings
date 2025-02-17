@@ -55,7 +55,7 @@ defmodule CrossingsWeb do
       use Phoenix.LiveView,
         layout: {CrossingsWeb.Layouts, :app}
 
-      import Crossings.SocketHelpers
+      import CrossingsWeb.SocketHelpers
       import CrossingsWeb.UserComponent
       alias CrossingsWeb.UserComponent
 

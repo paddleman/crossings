@@ -9,6 +9,8 @@ defmodule CrossingsWeb.UserProfileLive do
   def mount(_params, _session, socket) do
     user = socket.assigns.current_user
 
+    Accounts.subscribe_to_user_avatars()
+
     socket
     |> assign(:user, user)
     |> allow_upload(:avatar,
@@ -19,6 +21,7 @@ defmodule CrossingsWeb.UserProfileLive do
     |> ok()
   end
 
+  @impl true
   def handle_event("submit-avatar", _, socket) do
     if socket.assigns.user.id != socket.assigns.current_user.id do
       raise "Prohibited"
@@ -37,5 +40,22 @@ defmodule CrossingsWeb.UserProfileLive do
     {:noreply, socket}
   end
 
+  @impl true
   def handle_event("validate-avatar", _, socket), do: {:noreply, socket}
+
+  @impl true
+  def handle_info({:updated_avatar, user}, socket) do
+    socket
+    |> maybe_update_current_user(user)
+    |> no_reply()
+  end
+
+  defp maybe_update_current_user(socket, user) do
+    if socket.assigns.current_user.id == user.id do
+      socket
+      |> assign(current_user: user)
+    else
+      socket
+    end
+  end
 end

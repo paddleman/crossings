@@ -26,61 +26,25 @@
           <ul class="relative z-10 flex items-center gap-4 px-4 sm:px-6 lg:px-8 justify-end">
             <%= if @current_user do %>
               <li>
-                <%!-- <button class="group relative flex items-center h-8 text-sm pl-8 pr-3 hover:bg-slate-300 cursor-pointer w-full">
-         <.icon name="hero-plus" class="h-4 w-4 relative top-px" />
-
-         <span class="ml-2 leading-none">Add rooms</span>
-
-         <div class="hidden group-focus:block cursor-default absolute top-8 right-2 bg-white border-slate-200 border py-3 rounded-lg">
-           <div class="w-full text-left">
-             <div class="hover:bg-sky-600">
-               <div
-                 class="cursor-pointer whitespace-nowrap text-gray-800 hover:text-white px-6 py-1 block"
-                 phx-click={JS.navigate(~p"/rooms/#{@room}/new")}
-               >
-                 Create a new room
-               </div>
-             </div>
-
-             <div class="hover:bg-sky-600">
-               <div
-                 phx-click={JS.navigate(~p"/rooms")}
-                 class="cursor-pointer whitespace-nowrap text-gray-800 hover:text-white px-6 py-1"
-               >
-                 Browse rooms
-               </div>
-             </div>
-           </div>
-         </div>
-       </button> --%>
-
-                <%!-- <.link
-                   href={~p"/users/settings"}
-                   class="text-med leading-6 text-zinc-900 font-semibold hover:text-zinc-700"
-                 > --%>
-
                 <li>
-                  <button class="group relative flex items-center h-8 text-sm pl-8 pr-3 hover:bg-slate-300 cursor-pointer w-full">
-                    <CrossingsWeb.UserComponent.user_avatar
-                      user={@current_user}
-                      class="w-10 h-10 rounded-full bg-zinc-100/25 hover:bg-mc-med-teal"
-                    />
+                  <button class="group relative flex items-center h-8 text-sm pl-8 pr-3 cursor-pointer w-full">
+                    <CrossingsWeb.UserComponent.user_card user={@current_user} />
 
-                    <div class="hidden group-focus:block cursor-default absolute top-8 right-2 bg-white border-slate-200 border py-3 rounded-lg">
+                    <div class="hidden group-focus:block cursor-default absolute top-10 right-2 bg-zinc-300/50 py-2 rounded-lg">
                       <div class="w-full text-left">
-                        <div class="hover:bg-sky-600">
+                        <div class="hover:bg-mc-dark-teal">
                           <div
-                            class="cursor-pointer whitespace-nowrap text-gray-800 hover:text-white px-6 py-1 block"
+                            class="cursor-pointer whitespace-nowrap text-zinc-700 hover:text-zinc-100 px-6 py-1 block"
                             phx-click={JS.navigate(~p"/users/settings")}
                           >
                             Manage Password and Email
                           </div>
                         </div>
 
-                        <div class="hover:bg-sky-600">
+                        <div class="hover:bg-mc-dark-teal">
                           <div
                             phx-click={JS.navigate(~p"/users/profile")}
-                            class="cursor-pointer whitespace-nowrap text-gray-800 hover:text-white px-6 py-1"
+                            class="cursor-pointer whitespace-nowrap text-zinc-700 hover:text-zinc-100 px-6 py-1"
                           >
                             User Profile
                           </div>
@@ -88,9 +52,6 @@
                       </div>
                     </div>
                   </button>
-                </li>
-                <li class="text-med leading-6 text-zinc-300 hover:text-zinc-300/50">
-                  {@current_user.username}
                 </li>
               </li>
               <li>
