@@ -1,0 +1,40 @@
+<.header>
+  Listing Crossings
+  <:actions>
+    <.link patch={~p"/crossings/new"}>
+      <.button>New Crossing</.button>
+    </.link>
+  </:actions>
+</.header>
+
+<.table
+  id="crossings"
+  rows={@streams.crossings}
+  row_click={fn {_id, crossing} -> JS.navigate(~p"/crossings/#{crossing}") end}
+>
+  <:action :let={{_id, crossing}}>
+    <div class="sr-only">
+      <.link navigate={~p"/crossings/#{crossing}"}>Show</.link>
+    </div>
+    <.link patch={~p"/crossings/#{crossing}/edit"}>Edit</.link>
+  </:action>
+  <:action :let={{id, crossing}}>
+    <.link
+      phx-click={JS.push("delete", value: %{id: crossing.id}) |> hide("##{id}")}
+      data-confirm="Are you sure?"
+    >
+      Delete
+    </.link>
+  </:action>
+</.table>
+
+<.modal :if={@live_action in [:new, :edit]} id="crossing-modal" show on_cancel={JS.patch(~p"/crossings")}>
+  <.live_component
+    module={CrossingsWeb.CrossingLive.FormComponent}
+    id={@crossing.id || :new}
+    title={@page_title}
+    action={@live_action}
+    crossing={@crossing}
+    patch={~p"/crossings"}
+  />
+</.modal>

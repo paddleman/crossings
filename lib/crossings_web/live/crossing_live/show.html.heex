@@ -1,0 +1,25 @@
+<.header>
+  Crossing {@crossing.id}
+  <:subtitle>This is a crossing record from your database.</:subtitle>
+  <:actions>
+    <.link patch={~p"/crossings/#{@crossing}/show/edit"} phx-click={JS.push_focus()}>
+      <.button>Edit crossing</.button>
+    </.link>
+  </:actions>
+</.header>
+
+<.list>
+</.list>
+
+<.back navigate={~p"/crossings"}>Back to crossings</.back>
+
+<.modal :if={@live_action == :edit} id="crossing-modal" show on_cancel={JS.patch(~p"/crossings/#{@crossing}")}>
+  <.live_component
+    module={CrossingsWeb.CrossingLive.FormComponent}
+    id={@crossing.id}
+    title={@page_title}
+    action={@live_action}
+    crossing={@crossing}
+    patch={~p"/crossings/#{@crossing}"}
+  />
+</.modal>

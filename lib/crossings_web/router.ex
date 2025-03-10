@@ -81,6 +81,13 @@ defmodule CrossingsWeb.Router do
       on_mount: [{CrossingsWeb.UserAuth, :mount_current_user}] do
       live "/users/confirm/:token", UserConfirmationLive, :edit
       live "/users/confirm", UserConfirmationInstructionsLive, :new
+
+      live "/crossings", CrossingLive.Index, :index
+      live "/crossings/new", CrossingLive.Index, :new
+      live "/crossings/:id/edit", CrossingLive.Index, :edit
+
+      live "/crossings/:id", CrossingLive.Show, :show
+      live "/crossings/:id/show/edit", CrossingLive.Show, :edit
     end
   end
 end
