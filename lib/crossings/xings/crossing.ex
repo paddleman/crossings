@@ -5,15 +5,15 @@ defmodule Crossings.Xings.Crossing do
 
   schema "crossings" do
     field :geom, Geo.PostGIS.Geometry
-    field :latitude, :float
-    field :longitude, :float
+    # field :latitude, :float, source: :latitude_
+    # field :longitude, :float, source: :longitude_
 
     belongs_to :watercourse, Crossings.Xings.Watercourse
     belongs_to :road, Crossings.Xings.Road
-    belongs_to :watershed, Crossings.Xings.Watershed
+    # belongs_to :watershed, Crossings.Xings.Watershed
     has_many :structures, Crossings.Structures.Structure
 
-    timestamps(type: :utc_datetime)
+    # timestamps(type: :utc_datetime)
   end
 
   @doc false

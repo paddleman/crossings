@@ -17,4 +17,18 @@ defmodule Crossings.XingsFixtures do
 
     crossing
   end
+
+  @doc """
+  Generate a road.
+  """
+  def road_fixture(attrs \\ %{}) do
+    {:ok, road} =
+      attrs
+      |> Enum.into(%{
+        transport_line_type_code: "some transport_line_type_code"
+      })
+      |> Crossings.Xings.create_road()
+
+    road
+  end
 end

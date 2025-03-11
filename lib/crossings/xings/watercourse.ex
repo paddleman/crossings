@@ -3,7 +3,15 @@ defmodule Crossings.Xings.Watercourse do
   import Ecto.Changeset
   import Geo
 
-  schema "crossings" do
+  schema "watercourses" do
+    field :blue_line_key, :integer
+    field :fwa_watershed_code, :string
+    field :watershed_group_code, :string
+    field :feature_source, :string
+    field :gnis_name, :string
+    field :stream_order, :integer
+    field :stream_magnitude, :integer
+
     field :geom, Geo.PostGIS.Geometry
 
     has_many :crossings, Crossings.Xings.Crossing
