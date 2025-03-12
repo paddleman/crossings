@@ -25,7 +25,7 @@ class BaseMap {
     this.map = L.map(element).setView(center, 5);
 
     L.tileLayer(
-      "https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}",
+      'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png',
       {
         attribution:
           '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors ',
@@ -37,23 +37,24 @@ class BaseMap {
     this.markerClickedCallback = markerClickedCallback;
   }
 
-  // addMarker(xing) {
-  //   let xing_marker = L.marker(
-  //     [xing.lat, xing.lng],
-  //     { icon: circleIcon,
-  //       stationId: xing.id,
-  //     });
+  addMarker(xing) {
+    let xing_marker = L.marker(
+      [xing.lat, xing.lng],
+      {
+        icon: circleIcon,
+        crossingId: xing.id,
+      });
 
-  //     xing_marker.addTo(this.map);
-  //     xing_marker.bindPopup(xing.id);
+    xing_marker.addTo(this.map);
+    xing_marker.bindPopup(xing.id);
 
-  //   xing_marker.on("click", e => {
-  //     xing_marker.openPopup();
-  //     this.markerClickedCallback(e);
-  //   });
+    xing_marker.on("click", e => {
+      xing_marker.openPopup();
+      this.markerClickedCallback(e);
+    });
 
-  //   return xing_marker;
-  // }
+    return xing_marker;
+  }
 }
 
 export default BaseMap;

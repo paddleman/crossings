@@ -3,3 +3,8 @@
 @import "tailwindcss/utilities";
 
 /* This file is for your main application CSS */
+
+#map {
+  /* width: 500px; */
+  height: calc(95vh - 2rem);
+}

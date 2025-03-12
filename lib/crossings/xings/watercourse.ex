@@ -16,7 +16,7 @@ defmodule Crossings.Xings.Watercourse do
 
     has_many :crossings, Crossings.Xings.Crossing
 
-    timestamps(type: :utc_datetime)
+    # timestamps(type: :utc_datetime)
   end
 
   @doc false

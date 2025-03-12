@@ -36,10 +36,9 @@ defmodule Crossings.Xings do
 
   """
   def get_crossing!(id) do
-    Crossings
+    Crossing
     |> Repo.get!(id)
-
-    # |> Repo.preload([:watercourse, :road])
+    |> Repo.preload([:watercourse, :road])
   end
 
   @doc """

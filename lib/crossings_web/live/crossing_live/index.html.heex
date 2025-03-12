@@ -1,40 +1,25 @@
-<.header>
-  Listing Crossings
-  <:actions>
-    <.link patch={~p"/crossings/new"}>
-      <.button>New Crossing</.button>
-    </.link>
-  </:actions>
-</.header>
-
-<.table
-  id="crossings"
-  rows={@streams.crossings}
-  row_click={fn {_id, crossing} -> JS.navigate(~p"/crossings/#{crossing}") end}
->
-  <:action :let={{_id, crossing}}>
-    <div class="sr-only">
-      <.link navigate={~p"/crossings/#{crossing}"}>Show</.link>
+<div class="grid grid-cols-5 gap-4 p-4">
+  <div class="col-span-2">
+    <div class="min-h-dvh" id="some-id" phx-update="ignore">
+      <div class="border-black border-2" id="map" phx-hook="BaseMap"></div>
     </div>
-    <.link patch={~p"/crossings/#{crossing}/edit"}>Edit</.link>
-  </:action>
-  <:action :let={{id, crossing}}>
-    <.link
-      phx-click={JS.push("delete", value: %{id: crossing.id}) |> hide("##{id}")}
-      data-confirm="Are you sure?"
-    >
-      Delete
-    </.link>
-  </:action>
-</.table>
+  </div>
 
-<.modal :if={@live_action in [:new, :edit]} id="crossing-modal" show on_cancel={JS.patch(~p"/crossings")}>
-  <.live_component
-    module={CrossingsWeb.CrossingLive.FormComponent}
-    id={@crossing.id || :new}
-    title={@page_title}
-    action={@live_action}
-    crossing={@crossing}
-    patch={~p"/crossings"}
-  />
-</.modal>
+  <div class="col-span-3">
+    <div class="bg-zinc-100 bg-opacity-10 min-w-full min-h-full">
+      <div class="info-area min-h-full  ">
+        <%= if  @selected_crossing !== nil  do %>
+          <.live_component
+            module={CrossingInfoComponent}
+            id="inspect-#{@selected_station.id}"
+            cross={@selected_crossing}
+          />
+        <% else %>
+          <div class="text-2xl text-center">
+            Please select a crossing on map!
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

@@ -6,7 +6,7 @@ defmodule CrossingsWeb.CrossingLive.Index do
 
   @impl true
   def mount(_params, _session, socket) do
-    {:ok, stream(socket, :crossings, Xings.list_crossings())}
+    {:ok, socket}
   end
 
   @impl true
@@ -14,34 +14,35 @@ defmodule CrossingsWeb.CrossingLive.Index do
     {:noreply, apply_action(socket, socket.assigns.live_action, params)}
   end
 
-  defp apply_action(socket, :edit, %{"id" => id}) do
-    socket
-    |> assign(:page_title, "Edit Crossing")
-    |> assign(:crossing, Xings.get_crossing!(id))
-  end
-
-  defp apply_action(socket, :new, _params) do
-    socket
-    |> assign(:page_title, "New Crossing")
-    |> assign(:crossing, %Crossing{})
-  end
-
   defp apply_action(socket, :index, _params) do
     socket
-    |> assign(:page_title, "Listing Crossings")
-    |> assign(:crossing, nil)
+    |> assign(:page_title, "Crossings")
+    |> assign(:crossings, list_crossings())
+    |> assign(:selected_crossing, nil)
   end
 
   @impl true
-  def handle_info({CrossingsWeb.CrossingLive.FormComponent, {:saved, crossing}}, socket) do
-    {:noreply, stream_insert(socket, :crossings, crossing)}
+  def handle_event("get-crossings", _, socket) do
+    {:reply, %{crossings: socket.assigns.crossings}, socket}
   end
 
   @impl true
-  def handle_event("delete", %{"id" => id}, socket) do
-    crossing = Xings.get_crossing!(id)
-    {:ok, _} = Xings.delete_crossing(crossing)
+  def handle_event("marker-clicked", %{"crossingId" => id}, socket) do
+    crossing = find_crossing(socket, id)
+    full_crossing = get_crossing(id)
 
-    {:noreply, stream_delete(socket, :crossings, crossing)}
+    {:noreply, %{crossing: crossing}, socket |> assign(:selected_crossing, full_crossing)}
+  end
+
+  defp list_crossings() do
+    Xings.list_crossings()
+  end
+
+  defp get_crossing(id) do
+    Xings.get_crossing!(id)
+  end
+
+  defp find_crossing(socket, id) do
+    Enum.find(socket.assigns.crossings, &(&1.id == id))
   end
 end

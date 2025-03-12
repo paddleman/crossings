@@ -1,0 +1,10 @@
+{application,geo_postgis,
+             [{modules,['Elixir.Geo.PostGIS','Elixir.Geo.PostGIS.Config',
+                        'Elixir.Geo.PostGIS.Extension',
+                        'Elixir.Geo.PostGIS.Geometry']},
+              {optional_applications,[ecto,poison,jason]},
+              {applications,[kernel,stdlib,elixir,logger,geo,postgrex,ecto,
+                             poison,jason]},
+              {description,"geo_postgis"},
+              {registered,[]},
+              {vsn,"3.7.1"}]}.
