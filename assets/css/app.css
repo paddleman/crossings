@@ -8,3 +8,47 @@
   /* width: 500px; */
   height: calc(95vh - 2rem);
 }
+
+active-natural {
+  width: 24px;
+  height: 24px;
+  background-image: url("/images/active-nat.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+.active-regulated {
+  width: 24px;
+  height: 24px;
+  background-image: url("/images/active-reg.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  fill: darkgoldenrod;
+}
+
+.discontinued-natural {
+  width: 24px;
+  height: 24px;
+  background-image: url("/images/discontinued-nat.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  fill: lightyellow;
+}
+
+.dicontinued-regualted {
+  width: 24px;
+  height: 24px;
+  background-image: url("/images/discontinured-reg.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  fill: darkgoldenrod;
+}
+
+.short-record {
+  width: 3px;
+  height: 3px;
+  background-image: url("/images/short-record.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  fill: lightgray;
+}

@@ -9,11 +9,9 @@
     <div class="bg-zinc-100 bg-opacity-10 min-w-full min-h-full">
       <div class="info-area min-h-full  ">
         <%= if  @selected_crossing !== nil  do %>
-          <.live_component
-            module={CrossingInfoComponent}
-            id="inspect-#{@selected_station.id}"
-            cross={@selected_crossing}
-          />
+          <div class="text-2xl text-center">
+            {@selected_crossing.id}
+          </div>
         <% else %>
           <div class="text-2xl text-center">
             Please select a crossing on map!

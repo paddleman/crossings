@@ -6,6 +6,10 @@ defmodule Crossings.Xings.Crossing do
   @derive {Jason.Encoder,
            only: [
              :id,
+             :service_area_number,
+             :service_area_name,
+             :mott_district_number,
+             :mott_district_name,
              :lat,
              :lng
            ]}

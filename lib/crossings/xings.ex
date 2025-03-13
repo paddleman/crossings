@@ -18,7 +18,9 @@ defmodule Crossings.Xings do
 
   """
   def list_crossings do
-    Repo.all(Crossing)
+    Crossing
+    |> where([c], c.service_area_number == 1)
+    |> Repo.all()
   end
 
   @doc """

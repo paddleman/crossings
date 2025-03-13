@@ -1,31 +1,13 @@
+ 
 import L from "leaflet";
-
-const CustomIcon = L.Icon.extend({
-  options: {
-    iconSize: [6, 6],
-    // shadowSize:   [50, 64],
-    // iconAnchor:   [22, 94],
-    shadowAnchor: [3, 3],
-    // popupAnchor:  [-3, -76]
-  },
-});
-
-const svgRect =
-  "<svg xmlns='http://www.w3.org/2000/svg'><rect x='0' y='0' width='20' height='20' fill='#5a7cd2' /></svg>";
-const svgCirc =
-  "<svg xmlns='http://www.w3.org/2000/svg'><circle cx='25' cy='25' r='50' fill='#00958f' /></svg>";
-
-var url_rect = "data:image/svg+xml," + encodeURIComponent(svgRect);
-var url_circ = "data:image/svg+xml," + encodeURIComponent(svgCirc);
-var rectIcon = new CustomIcon({ iconUrl: url_rect });
-var circleIcon = new CustomIcon({ iconUrl: url_circ });
+import colours from "./colours";
 
 class BaseMap {
   constructor(element, center, markerClickedCallback) {
     this.map = L.map(element).setView(center, 5);
 
     L.tileLayer(
-      'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png',
+      "https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}",
       {
         attribution:
           '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors ',
@@ -37,24 +19,63 @@ class BaseMap {
     this.markerClickedCallback = markerClickedCallback;
   }
 
-  addMarker(xing) {
-    let xing_marker = L.marker(
-      [xing.lat, xing.lng],
-      {
-        icon: circleIcon,
-        crossingId: xing.id,
+    addMarker(crossing) {
+      const crossingIcon = L.divIcon({
+        className: setClassName(crossing),
+        iconSize: setIconSize(crossing),
       });
-
-    xing_marker.addTo(this.map);
-    xing_marker.bindPopup(xing.id);
-
-    xing_marker.on("click", e => {
-      xing_marker.openPopup();
-      this.markerClickedCallback(e);
-    });
-
-    return xing_marker;
-  }
+  
+      let crossing_marker = L.marker([crossing.lat, crossing.lng], {
+        icon: crossingIcon,
+        crossingId: crossing.id,
+        crossingServiceAreaName: crossing.service_area_name,
+        crossingServiceAreaNumber: crossing.service_area_number,
+      });
+  
+      crossing_marker.addTo(this.map);
+      crossing_marker.bindPopup(crossing.id);
+  
+      crossing_marker.on("click", (e) => {
+        crossing_marker.openPopup();
+        this.markerClickedCallback(e);
+      });
+  
+      return crossing_marker;
+    }
+  
 }
 
 export default BaseMap;
+
+function setClassName(c) {
+  if (c.service_area_number = 1 ) {
+    return "active-natural";
+  } else  {
+    return "discontinued-natural";
+  }
+}
+
+function setIconSize(s) {
+  // if (s.hyd_status == "A" && s.regulated == false && s.record_length > 5) {
+  //   return [10, 10];
+  // } else if (
+  //   s.hyd_status == "A" &&
+  //   s.regulated == true &&
+  //   s.record_length > 5
+  // ) {
+  //   return [8, 8];
+  // } else if (
+  //   s.hyd_status == "D" &&
+  //   s.regulated == false &&
+  //   s.record_length > 5
+  // ) {
+  //   return [10, 10];
+  // } else if (
+  //   s.hyd_status == "D" &&
+  //   s.regulated == true &&
+  //   s.record_length > 5
+  // ) {
+  //   return [8, 8];
+  // } else {
+    return [6, 6];
+  }

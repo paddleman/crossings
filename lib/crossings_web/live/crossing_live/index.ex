@@ -26,12 +26,15 @@ defmodule CrossingsWeb.CrossingLive.Index do
     {:reply, %{crossings: socket.assigns.crossings}, socket}
   end
 
-  @impl true
   def handle_event("marker-clicked", %{"crossingId" => id}, socket) do
-    crossing = find_crossing(socket, id)
-    full_crossing = get_crossing(id)
+    crossing = get_crossing(id)
+    IO.inspect(crossing)
 
-    {:noreply, %{crossing: crossing}, socket |> assign(:selected_crossing, full_crossing)}
+    socket =
+      socket
+      |> assign(:selected_crossing, crossing)
+
+    {:noreply, %{crossing: crossing}, socket}
   end
 
   defp list_crossings() do
