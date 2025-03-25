@@ -3,6 +3,11 @@ defmodule Crossings.Xings.Crossing do
   import Ecto.Changeset
   import Geo
 
+  alias Crossings.Structures.Structure
+  alias Crossings.Xings.Watercourse
+  alias Crossings.Xings.Road
+  alias Crossings.Xings.Watershed
+
   @derive {Jason.Encoder,
            only: [
              :id,
@@ -22,10 +27,10 @@ defmodule Crossings.Xings.Crossing do
     field :lat, :float
     field :lng, :float
 
-    belongs_to :watercourse, Crossings.Xings.Watercourse
-    belongs_to :road, Crossings.Xings.Road
-    # belongs_to :watershed, Crossings.Xings.Watershed
-    # has_many :structures, Crossings.Structures.Structure
+    belongs_to :watercourse, Watercourse
+    belongs_to :road, Road
+    # belongs_to :watershed, Watershed
+    has_many :structures, Structure
 
     # timestamps(type: :utc_datetime)
   end

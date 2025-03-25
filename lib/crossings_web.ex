@@ -93,6 +93,7 @@ defmodule CrossingsWeb do
       import Phoenix.HTML
       # Core UI components
       import CrossingsWeb.CoreComponents
+      import CrossingsWeb.CrossingInfoComponents
 
       # Shortcut for generating JS commands
       alias Phoenix.LiveView.JS

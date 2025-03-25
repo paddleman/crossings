@@ -88,6 +88,13 @@ defmodule CrossingsWeb.Router do
 
       live "/crossings/:id", CrossingLive.Show, :show
       live "/crossings/:id/show/edit", CrossingLive.Show, :edit
+
+      live "/bridges", BridgeLive.Index, :index
+      live "/bridges/new", BridgeLive.Index, :new
+      live "/bridges/:id/edit", BridgeLive.Index, :edit
+
+      live "/bridges/:id", BridgeLive.Show, :show
+      live "/bridges/:id/show/edit", BridgeLive.Show, :edit
     end
   end
 end

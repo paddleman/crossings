@@ -6,11 +6,14 @@ Hooks.BaseMap = {
 
   mounted() {
     this.map = new BaseMap(this.el, [49.5, -125.5], event => {
-      const crossingId = event.target.options.crossingId
+      const crossingInfo = { 
+        crossingId: event.target.options.crossingId
+      };      
       
-      this.pushEvent("marker-clicked", crossingId, (reply, ref) => {
+      this.pushEvent("marker-clicked", crossingInfo, (reply, ref) => {
         console.log(reply.crossing.id);
       });
+    
     });
 
     this.pushEvent("get-crossings", {}, (reply, ref) => {
@@ -18,6 +21,7 @@ Hooks.BaseMap = {
         this.map.addMarker(crossing);
       });
     }); 
+  
   }
 };
 export default Hooks;

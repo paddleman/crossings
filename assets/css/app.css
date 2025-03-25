@@ -9,7 +9,12 @@
   height: calc(95vh - 2rem);
 }
 
-active-natural {
+.info-area{
+  height: calc(95vh - 2rem);
+  overflow-y: auto;
+}
+
+.active-natural {
   width: 24px;
   height: 24px;
   background-image: url("/images/active-nat.png");

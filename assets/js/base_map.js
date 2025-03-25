@@ -4,7 +4,7 @@ import colours from "./colours";
 
 class BaseMap {
   constructor(element, center, markerClickedCallback) {
-    this.map = L.map(element).setView(center, 5);
+    this.map = L.map(element).setView(center, 8);
 
     L.tileLayer(
       "https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}",
@@ -19,28 +19,28 @@ class BaseMap {
     this.markerClickedCallback = markerClickedCallback;
   }
 
-    addMarker(crossing) {
+    addMarker(xing) {
       const crossingIcon = L.divIcon({
-        className: setClassName(crossing),
-        iconSize: setIconSize(crossing),
+        className: setClassName(xing),
+        iconSize: [6, 6],
       });
   
-      let crossing_marker = L.marker([crossing.lat, crossing.lng], {
+      let xing_marker = L.marker([xing.lat, xing.lng], {
         icon: crossingIcon,
-        crossingId: crossing.id,
-        crossingServiceAreaName: crossing.service_area_name,
-        crossingServiceAreaNumber: crossing.service_area_number,
+        crossingId: xing.id,
+        crossingServiceAreaName: xing.service_area_name,
+        crossingServiceAreaNumber: xing.service_area_number,
       });
   
-      crossing_marker.addTo(this.map);
-      crossing_marker.bindPopup(crossing.id);
+      xing_marker.addTo(this.map);
+      xing_marker.bindPopup(xing.service_area_name);
   
-      crossing_marker.on("click", (e) => {
-        crossing_marker.openPopup();
+      xing_marker.on("click", (e) => {
+        xing_marker.openPopup();
         this.markerClickedCallback(e);
       });
   
-      return crossing_marker;
+      return xing_marker;
     }
   
 }

@@ -13,16 +13,20 @@
     </script>
   </head>
   <body class="bg-lidar-dark">
-    <header class="px-4 mb-4">
+    <header class="px-4 mb-2">
       <div class="flex items-center justify-between border-b border-zinc-100 py-3 text-sm">
         <div class="flex items-center gap-4">
           <a href="/">
-            <img src={~p"/images/logo.svg"} width="36" />
+            <img src={~p"/images/mcelhanney-logo.png"} class="h-6" />
+          </a>
+          <a href="/">
+            <img src={~p"/images/bc-mott-logo.png"} class="w-24 bg-zinc-100/50" />
           </a>
           <p class="bg-brand/5 text-brand rounded-full px-2 font-medium leading-6">
             v{Application.spec(:phoenix, :vsn)}
           </p>
         </div>
+
         <div class="flex items-center gap-4 font-semibold leading-6 text-zinc-900">
           <ul class="relative z-10 flex items-center gap-4 px-4 sm:px-6 lg:px-8 justify-end">
             <%= if @current_user do %>

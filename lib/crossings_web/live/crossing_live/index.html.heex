@@ -1,23 +1,35 @@
-<div class="grid grid-cols-5 gap-4 p-4">
+
+<div class="grid grid-cols-5 gap-4 px4 py-1">
+
   <div class="col-span-2">
     <div class="min-h-dvh" id="some-id" phx-update="ignore">
       <div class="border-black border-2" id="map" phx-hook="BaseMap"></div>
     </div>
   </div>
 
+
   <div class="col-span-3">
-    <div class="bg-zinc-100 bg-opacity-10 min-w-full min-h-full">
-      <div class="info-area min-h-full  ">
+    <div class="bg-zinc-100 bg-opacity-10 min-w-full min-h-dvh">
+      <div class="info-area">
         <%= if  @selected_crossing !== nil  do %>
-          <div class="text-2xl text-center">
-            {@selected_crossing.id}
-          </div>
+
+                  <div class=" border-4 border-zinc-100 rounded mb-2">
+                    <div class="py-1 text-2xl font-bold text-zinc-700 text-center">
+                      {@selected_crossing.road.ministry_of_transport_name} - {@selected_crossing.watercourse.gnis_name}
+                    </div>
+                  </div>
+            <div class="text-2xl text-center">
+              <.road_info road={@selected_crossing.road} />
+            </div>
         <% else %>
-          <div class="text-2xl text-center">
-            Please select a crossing on map!
+          <div class="border-4 border-zinc-100 rounded my-4">
+            <div class="p-4 text-3xl text-center text-zinc-100">
+              Please select a crossing on map!
+            </div>
           </div>
         <% end %>
       </div>
     </div>
   </div>
+
 </div>

@@ -101,4 +101,98 @@ defmodule Crossings.Structures do
   def change_structure(%Structure{} = structure, attrs \\ %{}) do
     Structure.changeset(structure, attrs)
   end
+
+  @doc """
+  Returns the list of bridges.
+
+  ## Examples
+
+      iex> list_bridges()
+      [%Bridge{}, ...]
+
+  """
+  def list_bridges do
+    Repo.all(Bridge)
+  end
+
+  @doc """
+  Gets a single bridge.
+
+  Raises `Ecto.NoResultsError` if the Bridge does not exist.
+
+  ## Examples
+
+      iex> get_bridge!(123)
+      %Bridge{}
+
+      iex> get_bridge!(456)
+      ** (Ecto.NoResultsError)
+
+  """
+  def get_bridge!(id), do: Repo.get!(Bridge, id)
+
+  @doc """
+  Creates a bridge.
+
+  ## Examples
+
+      iex> create_bridge(%{field: value})
+      {:ok, %Bridge{}}
+
+      iex> create_bridge(%{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def create_bridge(attrs \\ %{}) do
+    %Bridge{}
+    |> Bridge.changeset(attrs)
+    |> Repo.insert()
+  end
+
+  @doc """
+  Updates a bridge.
+
+  ## Examples
+
+      iex> update_bridge(bridge, %{field: new_value})
+      {:ok, %Bridge{}}
+
+      iex> update_bridge(bridge, %{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def update_bridge(%Bridge{} = bridge, attrs) do
+    bridge
+    |> Bridge.changeset(attrs)
+    |> Repo.update()
+  end
+
+  @doc """
+  Deletes a bridge.
+
+  ## Examples
+
+      iex> delete_bridge(bridge)
+      {:ok, %Bridge{}}
+
+      iex> delete_bridge(bridge)
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def delete_bridge(%Bridge{} = bridge) do
+    Repo.delete(bridge)
+  end
+
+  @doc """
+  Returns an `%Ecto.Changeset{}` for tracking bridge changes.
+
+  ## Examples
+
+      iex> change_bridge(bridge)
+      %Ecto.Changeset{data: %Bridge{}}
+
+  """
+  def change_bridge(%Bridge{} = bridge, attrs \\ %{}) do
+    Bridge.changeset(bridge, attrs)
+  end
 end

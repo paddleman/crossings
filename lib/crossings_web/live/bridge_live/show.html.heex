@@ -1,0 +1,42 @@
+<.header>
+  Bridge {@bridge.id}
+  <:subtitle>This is a bridge record from your database.</:subtitle>
+  <:actions>
+    <.link patch={~p"/bridges/#{@bridge}/show/edit"} phx-click={JS.push_focus()}>
+      <.button>Edit bridge</.button>
+    </.link>
+  </:actions>
+</.header>
+
+<.list>
+  <:item title="Structure number">{@bridge.structure_number}</:item>
+  <:item title="Structure name">{@bridge.structure_name}</:item>
+  <:item title="Shape">{@bridge.shape}</:item>
+  <:item title="Type">{@bridge.type}</:item>
+  <:item title="Length">{@bridge.length}</:item>
+  <:item title="Diameter">{@bridge.diameter}</:item>
+  <:item title="Width">{@bridge.width}</:item>
+  <:item title="Height">{@bridge.height}</:item>
+  <:item title="Cover depth">{@bridge.cover_depth}</:item>
+  <:item title="Bci">{@bridge.bci}</:item>
+  <:item title="Urgency">{@bridge.urgency}</:item>
+  <:item title="Year build">{@bridge.year_build}</:item>
+  <:item title="Last inspected">{@bridge.last_inspected}</:item>
+  <:item title="Service area code">{@bridge.service_area_code}</:item>
+  <:item title="Latitude">{@bridge.latitude}</:item>
+  <:item title="Longitude">{@bridge.longitude}</:item>
+  <:item title="Data source">{@bridge.data_source}</:item>
+</.list>
+
+<.back navigate={~p"/bridges"}>Back to bridges</.back>
+
+<.modal :if={@live_action == :edit} id="bridge-modal" show on_cancel={JS.patch(~p"/bridges/#{@bridge}")}>
+  <.live_component
+    module={CrossingsWeb.BridgeLive.FormComponent}
+    id={@bridge.id}
+    title={@page_title}
+    action={@live_action}
+    bridge={@bridge}
+    patch={~p"/bridges/#{@bridge}"}
+  />
+</.modal>

@@ -1,0 +1,57 @@
+<.header>
+  Listing Bridges
+  <:actions>
+    <.link patch={~p"/bridges/new"}>
+      <.button>New Bridge</.button>
+    </.link>
+  </:actions>
+</.header>
+
+<.table
+  id="bridges"
+  rows={@streams.bridges}
+  row_click={fn {_id, bridge} -> JS.navigate(~p"/bridges/#{bridge}") end}
+>
+  <:col :let={{_id, bridge}} label="Structure number">{bridge.structure_number}</:col>
+  <:col :let={{_id, bridge}} label="Structure name">{bridge.structure_name}</:col>
+  <:col :let={{_id, bridge}} label="Shape">{bridge.shape}</:col>
+  <:col :let={{_id, bridge}} label="Type">{bridge.type}</:col>
+  <:col :let={{_id, bridge}} label="Length">{bridge.length}</:col>
+  <:col :let={{_id, bridge}} label="Diameter">{bridge.diameter}</:col>
+  <:col :let={{_id, bridge}} label="Width">{bridge.width}</:col>
+  <:col :let={{_id, bridge}} label="Height">{bridge.height}</:col>
+  <:col :let={{_id, bridge}} label="Cover depth">{bridge.cover_depth}</:col>
+  <:col :let={{_id, bridge}} label="Bci">{bridge.bci}</:col>
+  <:col :let={{_id, bridge}} label="Urgency">{bridge.urgency}</:col>
+  <:col :let={{_id, bridge}} label="Year build">{bridge.year_build}</:col>
+  <:col :let={{_id, bridge}} label="Last inspected">{bridge.last_inspected}</:col>
+  <:col :let={{_id, bridge}} label="Service area code">{bridge.service_area_code}</:col>
+  <:col :let={{_id, bridge}} label="Latitude">{bridge.latitude}</:col>
+  <:col :let={{_id, bridge}} label="Longitude">{bridge.longitude}</:col>
+  <:col :let={{_id, bridge}} label="Data source">{bridge.data_source}</:col>
+  <:action :let={{_id, bridge}}>
+    <div class="sr-only">
+      <.link navigate={~p"/bridges/#{bridge}"}>Show</.link>
+    </div>
+    <.link patch={~p"/bridges/#{bridge}/edit"}>Edit</.link>
+  </:action>
+  <:action :let={{id, bridge}}>
+    <.link
+      phx-click={JS.push("delete", value: %{id: bridge.id}) |> hide("##{id}")}
+      data-confirm="Are you sure?"
+    >
+      Delete
+    </.link>
+  </:action>
+</.table>
+
+<.modal :if={@live_action in [:new, :edit]} id="bridge-modal" show on_cancel={JS.patch(~p"/bridges")}>
+  <.live_component
+    module={CrossingsWeb.BridgeLive.FormComponent}
+    id={@bridge.id || :new}
+    title={@page_title}
+    action={@live_action}
+    bridge={@bridge}
+    patch={~p"/bridges"}
+  />
+</.modal>
